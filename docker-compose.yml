@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    container_name: db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=user1234
+      - POSTGRES_DB=PSQLDB
+    ports:
+      - '5434:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  python:
+    build: ./Dockerfile
+    ports:
+      - "5000:5000"   
